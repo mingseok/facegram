@@ -19,7 +19,7 @@
 
     <insert id="savePost" parameterType="com.project.facegram.dto.PostDto">
         insert into post (title, content, writer, created_date)
-        values (#{title}, #{content}, #{writer}, #{createdDate})
+        values (#{title}, #{content}, #{writer}, #{createdDate});
     </insert>
 
     <update id="updatePost" parameterType="com.project.facegram.dto.PostDto">

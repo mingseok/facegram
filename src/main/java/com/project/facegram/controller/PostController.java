@@ -36,6 +36,7 @@ public class PostController {
     public String viewPost(Model model, @RequestParam Long id, @AuthenticationPrincipal User user) {
 
         Member member = memberService.getMember(user.getUsername());
+        log.info("member={}", member);
         Profile profile = settingsService.getMemberProfile(member.getId());
 
         model.addAttribute("profile",profile); //프로필 관련 보여줄 부분

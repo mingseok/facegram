@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.facegram.mapper.ReplyMapper">
+
+    <select id="replyCount" resultType="int">
+        select count(*)
+        from reply;
+    </select>
+
+
+    <select id="replyList" resultType="com.project.facegram.dto.ReplyDto">
+        select *
+        from reply;
+    </select>
+
+
+    <insert id="insertReply" parameterType="com.project.facegram.dto.ReplyDto">
+        insert into reply
+            (id, post_idx, writer, content, date)
+        VALUES (#{id}, #{postIdx}, #{writer}, #{content}, now());
+    </insert>
+
+
+    <update id="updateReply" parameterType="com.project.facegram.dto.ReplyDto">
+        update reply
+        set content = #{content}
+        where id = #{id};
+    </update>
+
+
+    <delete id="deleteReply" parameterType="int">
+        delete
+        from reply
+        where id = #{id};
+    </delete>
+
+</mapper>

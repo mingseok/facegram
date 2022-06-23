@@ -18,7 +18,7 @@
     <select id="getMember" parameterType="String" resultType="com.project.facegram.domain.Member">
         SELECT *
         FROM members
-        WHERE login_id = #{loginId}
+        WHERE login_id = #{loginId};
     </select>
 </mapper>
 
