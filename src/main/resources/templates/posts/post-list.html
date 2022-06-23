@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"></head>
+<body>
+<div th:replace="fragments.html :: main-nav"></div>
+<div class="container">
+    <table class="table table-hover" style="margin-top: 5%">
+        <thead>
+        <th>글번호</th>
+        <th>작성자</th>
+        <th>제목</th>
+        <th>조회수</th>
+        <th>날짜</th>
+        </thead>
+        <tr th:each="list :${list}">
+            <td><span th:text="${listStat.index+1}"></span></td>
+            <td>[[${list.writer}]]</td>
+            <td>
+                <a th:href="@{/post-view(id=${list.id})}">
+                    [[${list.title}]]
+                </a>
+            </td>
+            <td>[[${list.hit}]]</td>
+            <td><span th:text="${#temporals.format(list.createdDate,'yyyy-MM-dd HH:mm')}">작성시간</span></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

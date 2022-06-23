@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!--매개변수 타입(=파라미터)이 객체라 parameterType="com.project.facegram.dto.MemberDto"-->
+<mapper namespace="com.project.facegram.mapper.MemberMapper">
+    <insert id="joinMember" parameterType="com.project.facegram.dto.MemberDto">
+        INSERT INTO members
+            (login_id, member_pwd, member_name, email, join_date)
+        VALUES (#{loginId}, #{memberPwd}, #{memberName}, #{email}, #{joinDate});
+    </insert>
+
+
+    <!-- 문자로 받기 때문에 parameterType="String" 인것이다. 매개변수라고 생각하자.-->
+    <!-- sql 반환타입은 resultType 이다. 다시 서비스로 보낸다고 생각하면 된다.-->
+    <select id="getMember" parameterType="String" resultType="com.project.facegram.domain.Member">
+        SELECT *
+        FROM members
+        WHERE login_id = #{loginId}
+    </select>
+</mapper>
+

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.project.facegram.mapper.SettingsMapper">
+
+    <select id="getMemberProfile" parameterType="int" resultType="com.project.facegram.domain.Profile">
+        select *
+        from profile
+        where member_id = #{memberId}
+    </select>
+
+
+    <insert id="createProfile" parameterType="int">
+        insert into profile (member_id)
+        values (#{memberId});
+    </insert>
+
+
+    <update id="updateProfile" parameterType="com.project.facegram.dto.ProfileDto">
+        update profile
+        set bio           = #{bio},
+            url           = #{url},
+            profile_image = #{profileImage}
+        where member_id = #{memberId};
+    </update>
+
+
+</mapper>

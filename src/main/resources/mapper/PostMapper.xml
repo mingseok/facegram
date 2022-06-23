@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.project.facegram.mapper.PostMapper">
+
+    <select id="postList" resultType="com.project.facegram.domain.Post">
+        select *
+        from post;
+    </select>
+
+    <select id="getPost" parameterType="Long" resultType="com.project.facegram.domain.Post">
+        select *
+        from post
+        where id = #{id};
+    </select>
+
+    <insert id="savePost" parameterType="com.project.facegram.dto.PostDto">
+        insert into post (title, content, writer, created_date)
+        values (#{title}, #{content}, #{writer}, #{createdDate})
+    </insert>
+
+    <update id="updatePost" parameterType="com.project.facegram.dto.PostDto">
+        update post
+        set title = #{title} , content = #{content}
+        where id = #{id};
+    </update>
+
+    <delete id="deletePost" parameterType="Long">
+        delete
+        from post
+        where id = #{id};
+    </delete>
+
+    <update id="increaseHit" parameterType="Long">
+        UPDATE post
+        set hit = hit + 1
+        where id = #{id};
+    </update>
+</mapper>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"></head>
+<body>
+<div th:replace="fragments.html :: main-nav"></div>
+
+<div class="container">
+    <form id="form" th:action="@{/update}" th:method="put">
+        <p>글번호 : [[${post.id}]]</p>
+        제목 :
+        <div id="title">
+            <textarea class="form-control" name='title'>[[${post.title}]]</textarea>
+        </div>
+
+        내용 :
+        <div id="content">
+            <textarea class="form-control" name='content'>[[${post.content}]]</textarea>
+        </div>
+        <input type="hidden" name="id" th:value="${post.id}">
+        <button type="submit">저장</button>
+    </form>
+</div>
+</body>
+</html>
+
+
