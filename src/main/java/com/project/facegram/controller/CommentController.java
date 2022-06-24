@@ -27,6 +27,11 @@ public class CommentController {
     private final PostService postService;
     private final SettingsService settingsService;
 
+    // 설명
+    // posts/post-view 페이지로 보내고
+    // :: #comment-list 부분은 post-view.html 파일의
+    // <div class="comments col-9 comment-list" style="padding-top: 3%;" id="comment-list">
+    // 으로 가게 되는 것이다.
     private static final String COMMENT_PATH = "posts/post-view :: #comment-list";
 
     //댓글 저장
@@ -34,32 +39,38 @@ public class CommentController {
     public String commentSave(@PathVariable Long postId,
                               @RequestParam String comment,
                               @AuthenticationPrincipal User user,
-                              Model model){
+                              Model model) {
 
 
         Post post = postService.getPost(postId);
 
-        Member loginMember = memberService.getMember(user.getUsername()); //현재 로그인한 멤버
+        // 현재 로그인한 멤버
+        Member loginMember = memberService.getMember(user.getUsername());
 
         commentService.commentSave(comment, postId, user.getUsername());
 
-        Profile profile = settingsService.getMemberProfile(loginMember.getId()); //현재 로그인한 사람의 프로필 가져오기
+        // 현재 로그인한 사람의 프로필 가져오기
+        Profile profile = settingsService.getMemberProfile(loginMember.getId());
 
+        // 현재 게시글의 댓글 가져오기
+        List<Comment> comments = commentService.getCommentList(postId);
 
-        List<Comment> comments = commentService.getCommentList(postId); //현재 게시글의 댓글 가져오기
-
-        model.addAttribute("profile",profile); //프로필 관련 보여줄 부분
+        model.addAttribute("profile", profile); //프로필 관련 보여줄 부분
 
         model.addAttribute("comments", comments);
-        model.addAttribute("member",loginMember);
-        model.addAttribute("post",post);
+        model.addAttribute("member", loginMember);
+        model.addAttribute("post", post);
 
         return COMMENT_PATH; //모델에 담아서 보냄.
     }
 
     //댓글 삭제
     @PostMapping("/deleteComment/{commentId}/{postId}")
-    public String deleteComment(@PathVariable Long postId, @PathVariable int commentId, @AuthenticationPrincipal User user, Model model){
+    public String deleteComment(@PathVariable Long postId,
+                                @PathVariable int commentId,
+                                @AuthenticationPrincipal User user,
+                                Model model) {
+
 
         Post post = postService.getPost(postId);
         Member loginMember = memberService.getMember(user.getUsername()); //현재 로그인한 멤버
@@ -70,10 +81,10 @@ public class CommentController {
         //삭제 후에 다시 댓글 가져오기
         List<Comment> comments = commentService.getCommentList(postId); //현재 게시글의 댓글 가져오기
 
-        model.addAttribute("profile",profile); //프로필 관련 보여줄 부분
+        model.addAttribute("profile", profile); //프로필 관련 보여줄 부분
         model.addAttribute("comments", comments);
-        model.addAttribute("member",loginMember);
-        model.addAttribute("post",post);
+        model.addAttribute("member", loginMember);
+        model.addAttribute("post", post);
 
         return COMMENT_PATH;
     }

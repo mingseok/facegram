@@ -19,6 +19,7 @@ public class CommentService {
 
     public void commentSave(String comment, Long postId, String loginId) {
 
+        //Dto를 만들어서 사용하는 것이다.
         CommentDto commentDto = CommentDto.builder()
                 .content(comment)
                 .postId(postId)
