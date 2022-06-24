@@ -5,10 +5,7 @@ import com.project.facegram.domain.Member;
 import com.project.facegram.domain.Post;
 import com.project.facegram.domain.Profile;
 import com.project.facegram.dto.PostDto;
-import com.project.facegram.service.CommentService;
-import com.project.facegram.service.MemberService;
-import com.project.facegram.service.PostService;
-import com.project.facegram.service.SettingsService;
+import com.project.facegram.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,17 +25,21 @@ public class PostController {
     private final MemberService memberService;
     private final SettingsService settingsService;
     private final CommentService commentService;
+    private final LikeService likeService;
 
     // 게시판 전체 출력
     @GetMapping("/post")
     public String post(Model model) {
+
         model.addAttribute("list", postService.postList());
         return "posts/post-list";
     }
 
     // 게시판 상세 보기
     @GetMapping("/post-view")
-    public String viewPost(Model model, @RequestParam Long id, @AuthenticationPrincipal User user) {
+    public String viewPost(Model model,
+                           @RequestParam int id,
+                           @AuthenticationPrincipal User user) {
 
         Member member = memberService.getMember(user.getUsername());
 
@@ -47,9 +48,16 @@ public class PostController {
         postService.increaseHit(id); //조회수 1 증가 (DB에)
         Post post = postService.getPost(id); //조회수 update 된 post 가져오기
 
-        List<Comment> comments = commentService.getCommentList(id); //현재 게시글의 댓글 가져오기
+        //현재 게시글의 댓글 가져오기
+        List<Comment> comments = commentService.getCommentList(id);
+
+
+        //현재 로그인한 계정이 게시글 좋아요를 눌렀는지 판단(반환타입 boolean)
+        model.addAttribute("like", likeService.isLike(id, member.getId()));
+        model.addAttribute("likeList", likeService.getLike(id));
 
         model.addAttribute("comments", comments); //댓글
+
         model.addAttribute("profile",profile); //프로필 관련 보여줄 부분
         model.addAttribute("member",member);
         model.addAttribute("post", post);
@@ -60,20 +68,23 @@ public class PostController {
     // 게시글 작성
     @GetMapping("/new-post")
     public String newPostForm(Model model) {
+
         model.addAttribute("postDto", new PostDto());
         return "posts/new-post";
     }
 
     // 게시글 저장
     @PostMapping("/new-post")
-    public String newPost(PostDto postDto, @AuthenticationPrincipal User user) {
+    public String newPost(PostDto postDto,
+                          @AuthenticationPrincipal User user) {
+
         postService.savePost(postDto, user.getUsername());
         return "redirect:/post";
     }
 
     //게시글 수정 폼
     @GetMapping("/update/{id}")
-    public String updatePostForm(Model model, @PathVariable Long id) {
+    public String updatePostForm(Model model, @PathVariable int id) {
 
         model.addAttribute("postDto", new PostDto());
         model.addAttribute("post", postService.getPost(id));
@@ -83,6 +94,7 @@ public class PostController {
 
     @PutMapping("/update")
     public String updatePost(@ModelAttribute PostDto postDto) {
+
         postService.updatePost(postDto);
         // 업데이트만 했는데, 어떻게 다시 디비에서 꺼내 오는가?? "난 수정만 했을뿐인데?"
         // 그 이유는 바로 밑에 return redirect 로 /post를 실행 시키기 때문인 것이다.
@@ -92,7 +104,8 @@ public class PostController {
 
     @DeleteMapping("/delete/{id}")
     @ResponseBody
-    public String deletePost(@PathVariable Long id) {
+    public String deletePost(@PathVariable int id) {
+
         postService.deletePost(id);
         return "/post";
     }

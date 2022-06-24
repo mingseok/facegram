@@ -21,7 +21,7 @@ public class PostService {
         return postMapper.postList(); // 게시글 리스트 반환
     }
 
-    public Post getPost(Long id) {
+    public Post getPost(int id) {
         return postMapper.getPost(id);
     }
 
@@ -37,11 +37,11 @@ public class PostService {
     }
 
     @Transactional
-    public void deletePost(Long id) {
+    public void deletePost(int id) {
         postMapper.deletePost(id);
     }
 
-    public void increaseHit(Long id) {
+    public void increaseHit(int id) {
         postMapper.increaseHit(id);
     }
 }

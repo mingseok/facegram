@@ -14,7 +14,7 @@ public interface CommentMapper {
     public int commentCount();
 
     // 댓글 목록
-    public List<Comment> getCommentList(Long postId);
+    public List<Comment> getCommentList(int postId);
 
     // 댓글 작성
     public int saveComment(CommentDto commentDto);

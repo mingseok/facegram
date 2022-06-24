@@ -17,7 +17,7 @@ public class CommentService {
 
     private final CommentMapper commentMapper;
 
-    public void commentSave(String comment, Long postId, String loginId) {
+    public void commentSave(String comment, int postId, String loginId) {
 
         //Dto를 만들어서 사용하는 것이다.
         CommentDto commentDto = CommentDto.builder()
@@ -30,7 +30,7 @@ public class CommentService {
         commentMapper.saveComment(commentDto);
     }
 
-    public List<Comment> getCommentList(Long postId) {
+    public List<Comment> getCommentList(int postId) {
         return commentMapper.getCommentList(postId);
     }
 

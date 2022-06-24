@@ -11,7 +11,7 @@
         from post;
     </select>
 
-    <select id="getPost" parameterType="Long" resultType="com.project.facegram.domain.Post">
+    <select id="getPost" parameterType="int" resultType="com.project.facegram.domain.Post">
         select *
         from post
         where id = #{id};
@@ -28,13 +28,13 @@
         where id = #{id};
     </update>
 
-    <delete id="deletePost" parameterType="Long">
+    <delete id="deletePost" parameterType="int">
         delete
         from post
         where id = #{id};
     </delete>
 
-    <update id="increaseHit" parameterType="Long">
+    <update id="increaseHit" parameterType="int">
         UPDATE post
         set hit = hit + 1
         where id = #{id};

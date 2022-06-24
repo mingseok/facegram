@@ -7,10 +7,10 @@ import java.time.LocalDateTime;
 @Data
 public class PostDto {
 
-    private Long id;
+    private int id;
     private String title;
     private String content;
     private String writer;
     private LocalDateTime createdDate;
-    private Long hit;
+    private int hit;
 }

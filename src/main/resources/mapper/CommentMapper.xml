@@ -11,7 +11,7 @@
     </select>
 
 
-    <select id="getCommentList" parameterType="Long" resultType="com.project.facegram.domain.Comment">
+    <select id="getCommentList" parameterType="int" resultType="com.project.facegram.domain.Comment">
         select *
         from comment
         where post_id = #{postId}

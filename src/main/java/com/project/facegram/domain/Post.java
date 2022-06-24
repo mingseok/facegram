@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Post {
 
-    private Long id;
+    private int id;
     private String title;
     private String content;
     private String writer;
     private LocalDateTime createdDate;
-    private Long hit;
+    private int hit;
 }

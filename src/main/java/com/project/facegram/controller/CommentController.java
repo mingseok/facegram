@@ -36,7 +36,7 @@ public class CommentController {
 
     //댓글 저장
     @PostMapping("/comment/save/{postId}")
-    public String commentSave(@PathVariable Long postId,
+    public String commentSave(@PathVariable int postId,
                               @RequestParam String comment,
                               @AuthenticationPrincipal User user,
                               Model model) {
@@ -66,7 +66,7 @@ public class CommentController {
 
     //댓글 삭제
     @PostMapping("/deleteComment/{commentId}/{postId}")
-    public String deleteComment(@PathVariable Long postId,
+    public String deleteComment(@PathVariable int postId,
                                 @PathVariable int commentId,
                                 @AuthenticationPrincipal User user,
                                 Model model) {

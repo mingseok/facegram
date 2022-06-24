@@ -11,13 +11,13 @@ public interface PostMapper {
 
     List<Post> postList();
 
-    Post getPost(Long id);
+    Post getPost(int id);
 
     void savePost(PostDto postDto);
 
     void updatePost(PostDto postDto);
 
-    void deletePost(Long id);
+    void deletePost(int id);
 
-    void increaseHit(Long id);
+    void increaseHit(int id);
 }
