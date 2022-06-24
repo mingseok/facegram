@@ -1,9 +1,11 @@
 package com.project.facegram.controller;
 
+import com.project.facegram.domain.Comment;
 import com.project.facegram.domain.Member;
 import com.project.facegram.domain.Post;
 import com.project.facegram.domain.Profile;
 import com.project.facegram.dto.PostDto;
+import com.project.facegram.service.CommentService;
 import com.project.facegram.service.MemberService;
 import com.project.facegram.service.PostService;
 import com.project.facegram.service.SettingsService;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -23,6 +27,7 @@ public class PostController {
     private final PostService postService;
     private final MemberService memberService;
     private final SettingsService settingsService;
+    private final CommentService commentService;
 
     // 게시판 전체 출력
     @GetMapping("/post")
@@ -36,14 +41,17 @@ public class PostController {
     public String viewPost(Model model, @RequestParam Long id, @AuthenticationPrincipal User user) {
 
         Member member = memberService.getMember(user.getUsername());
-        log.info("member={}", member);
-        Profile profile = settingsService.getMemberProfile(member.getId());
 
-        model.addAttribute("profile",profile); //프로필 관련 보여줄 부분
+        Profile profile = settingsService.getMemberProfile(member.getId());
 
         postService.increaseHit(id); //조회수 1 증가 (DB에)
         Post post = postService.getPost(id); //조회수 update 된 post 가져오기
 
+        List<Comment> comments = commentService.getCommentList(id); //현재 게시글의 댓글 가져오기
+
+        model.addAttribute("comments", comments); //댓글
+        model.addAttribute("profile",profile); //프로필 관련 보여줄 부분
+        model.addAttribute("member",member);
         model.addAttribute("post", post);
 
         return "posts/post-view";

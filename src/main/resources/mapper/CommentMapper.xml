@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.facegram.mapper.CommentMapper">
+
+    <select id="replyCount" resultType="int">
+        select count(*)
+        from comment;
+    </select>
+
+
+    <select id="getCommentList" parameterType="Long" resultType="com.project.facegram.domain.Comment">
+        select *
+        from comment
+        where post_id = #{postId}
+        order by date desc;
+    </select>
+
+
+    <insert id="saveComment" parameterType="com.project.facegram.dto.CommentDto">
+        insert into comment
+            (post_id, writer, content, date)
+        VALUES (#{postId}, #{writer}, #{content}, #{date});
+    </insert>
+
+
+    <delete id="deleteComment" parameterType="int">
+        delete
+        from comment
+        where id = #{id};
+    </delete>
+
+</mapper>

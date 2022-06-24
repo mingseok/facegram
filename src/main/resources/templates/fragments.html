@@ -93,5 +93,48 @@
     <a class="list-group-item list-group-item-action list-group-item-danger" th:classappend="${currentMenu == 'user'}? active" href="#" th:href="@{/settings/user}">계정</a>
 </div>
 
+<div th:fragment="post-comments">
+    <script type="application/javascript" th:inline="javascript">
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+        $(function() {
+            $(document).ajaxSend(function(e, xhr, options) {
+                xhr.setRequestHeader(header, token);
+            });
+        });
+        let id = $("#post_id").attr("value");
+
+        $(document).on("click", ".comment-save", function () {
+                let comment = $("#comment").val();
+                $.ajax({
+                    url: '/comment/save/' + id,
+                    type: 'post',
+                    dataType: 'text',
+                    data: {
+                        comment: comment
+                    },
+                    success: function (fragment) {
+                        $('.comment-list').replaceWith(fragment);
+                    }
+                });
+        });
+
+        $(document).on("click", ".comment-delete", function(){
+            let page = $(this).attr("name");
+            let comment_id = $(this).attr("value");
+            $.ajax({
+                url : '/deleteComment/' + comment_id + '/' + id,
+                type : 'post',
+                data : {
+                    page : page
+                },
+                success : function(fragment) {
+                    $('.comment-list').replaceWith(fragment);
+                }
+            });
+        });
+    </script>
+</div>
+
 </body>
 </html>
