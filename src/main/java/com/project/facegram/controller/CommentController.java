@@ -27,11 +27,6 @@ public class CommentController {
     private final PostService postService;
     private final SettingsService settingsService;
 
-    @GetMapping("css")
-    public String css() {
-        return "css";
-    }
-
 
     // 설명
     // posts/post-view 페이지로 보내고
