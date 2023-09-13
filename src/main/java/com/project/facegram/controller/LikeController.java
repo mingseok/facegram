@@ -19,7 +19,6 @@ public class LikeController {
     private final LikeService likeService;
     private final MemberService memberService;
 
-
     @GetMapping("/like/add")
     @ResponseBody
     public int addLike(int id, @AuthenticationPrincipal User user) {

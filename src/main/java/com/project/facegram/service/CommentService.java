@@ -18,7 +18,6 @@ public class CommentService {
     private final CommentMapper commentMapper;
 
     public void commentSave(String comment, int postId, String loginId) {
-
         //Dto를 만들어서 사용하는 것이다.
         CommentDto commentDto = CommentDto.builder()
                 .content(comment)

@@ -39,7 +39,6 @@ public class MemberService implements UserDetailsService { // 시큐리티 사�
         settingsService.createProfile(memberMapper.getMember(memberDto.getLoginId()));
     }
 
-
     // 시큐리티 인터페이스 메서드
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

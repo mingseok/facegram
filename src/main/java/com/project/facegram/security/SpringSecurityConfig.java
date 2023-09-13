@@ -22,7 +22,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/image/**");
     }
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests() // 인증을 사용하겠다 하는 부분.

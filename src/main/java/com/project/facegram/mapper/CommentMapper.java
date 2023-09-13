@@ -21,5 +21,4 @@ public interface CommentMapper {
 
     // 댓글 삭제
     public int deleteComment(int commentId);
-
 }

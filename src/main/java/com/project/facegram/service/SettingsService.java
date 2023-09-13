@@ -28,4 +28,3 @@ public class SettingsService {
         settingsMapper.updateProfile(profileDto);
     }
 }
-
