@@ -1,12 +1,13 @@
 package com.project.facegram.domain;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Likes {
-
     private int id;
     private int postId;
     private int memberId;
-
 }

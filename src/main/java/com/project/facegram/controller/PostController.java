@@ -30,7 +30,6 @@ public class PostController {
     // 게시판 전체 출력
     @GetMapping("/post")
     public String post(Model model) {
-
         model.addAttribute("list", postService.postList());
         return "posts/post-list";
     }
@@ -68,16 +67,13 @@ public class PostController {
     // 게시글 작성
     @GetMapping("/new-post")
     public String newPostForm(Model model) {
-
         model.addAttribute("postDto", new PostDto());
         return "posts/new-post";
     }
 
     // 게시글 저장
     @PostMapping("/new-post")
-    public String newPost(PostDto postDto,
-                          @AuthenticationPrincipal User user) {
-
+    public String newPost(PostDto postDto, @AuthenticationPrincipal User user) {
         postService.savePost(postDto, user.getUsername());
         return "redirect:/post";
     }
@@ -85,7 +81,6 @@ public class PostController {
     //게시글 수정 폼
     @GetMapping("/update/{id}")
     public String updatePostForm(Model model, @PathVariable int id) {
-
         model.addAttribute("postDto", new PostDto());
         model.addAttribute("post", postService.getPost(id));
 
@@ -94,7 +89,6 @@ public class PostController {
 
     @PutMapping("/update")
     public String updatePost(@ModelAttribute PostDto postDto) {
-
         postService.updatePost(postDto);
         // 업데이트만 했는데, 어떻게 다시 디비에서 꺼내 오는가?? "난 수정만 했을뿐인데?"
         // 그 이유는 바로 밑에 return redirect 로 /post를 실행 시키기 때문인 것이다.
@@ -105,7 +99,6 @@ public class PostController {
     @DeleteMapping("/delete/{id}")
     @ResponseBody
     public String deletePost(@PathVariable int id) {
-
         postService.deletePost(id);
         return "/post";
     }

@@ -10,5 +10,4 @@ public interface MemberMapper {
     void joinMember(MemberDto memberDto);
 
     Member getMember(String loginId);
-
 }

@@ -24,13 +24,11 @@ public class MemberController {
     @GetMapping("/sign-up")
     public String signup(Model model) {
         model.addAttribute("memberDto", new MemberDto()); // 그릇도 같이 보내는 것이다.
-
         return "members/sign-up";
     }
 
     @PostMapping("/sign-up")
     public String signUp(@ModelAttribute MemberDto memberDto) {
-
         memberService.joinMember(memberDto);
         return "redirect:/main";
     }
@@ -41,8 +39,6 @@ public class MemberController {
 
         model.addAttribute("error", error);
         model.addAttribute("exception", exception);
-
         return "/members/login";
     }
 }
-

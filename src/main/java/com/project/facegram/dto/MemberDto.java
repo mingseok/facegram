@@ -14,4 +14,12 @@ public class MemberDto {
     private String email;
     private LocalDateTime joinDate;
 
+    public void changeJoinDate() {
+        this.joinDate = LocalDateTime.now();
+    }
+
+    public void changeMemberPwd(String password) {
+        this.memberPwd = password;
+    }
+
 }
